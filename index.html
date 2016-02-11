@@ -28,11 +28,33 @@
 				<div class="box box1"><div id="latitude">Blah</div></div>
 				<div class="box box2"><div id="longitude">Blah</div></div>
 			</div>
-
-
-
+		<font color = "white">Click the button to get your coordinates.</font><br>
+		<button onclick ="getLocation()" >Click me </button>
+		
+		<p id="mapholder"></p>
+		
 		<script>
 
-</script>
+			var x = document.getElementById("latitude");
+			var y = document.getElementById("longitude");
+			function getLocation() {
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(showPosition);
+				} else { 
+					x.innerHTML = "Geolocation is not supported by this browser.";
+				}
+			}
+
+			function showPosition(position) {
+				x.innerHTML = "Latitude: " + position.coords.latitude.toFixed(5); 
+				y.innerHTML = "Longitude: " + position.coords.longitude.toFixed(5);	
+				
+				var latlon = position.coords.latitude + "," + position.coords.longitude;
+
+				var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="
+				+latlon+"&zoom=14&size=400x300&sensor=false";
+				document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+			}
+		</script>
 	</body>
 </html>
